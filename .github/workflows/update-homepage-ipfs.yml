@@ -46,3 +46,13 @@ jobs:
           IPFS_SWARM_CONNECT_TO: ${{ secrets.IPFS_SWARM_CONNECT_TO }}
           IPFS_REMOTE_API_ENDPOINT: ${{ secrets.IPFS_REMOTE_API_ENDPOINT }}
           IPFS_REMOTE_TOKEN: ${{ secrets.IPFS_REMOTE_TOKEN }}
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          # Upload entire repository
+          path: 'result/www/'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
