@@ -32,8 +32,9 @@ if test -n "${IPFS_REMOTE_API_ENDPOINT:-}" && test -n "${IPFS_REMOTE_TOKEN:-}" &
   echo "Pinning $h on the remote service..."
   (
     ipfs pin remote add --service=my-remote-pin --name="site-bounties-$(TZ=UTC git log -1 --format=%cd --date=iso-strict-local HEAD)-$GITHUB_SHA" "$h"
+    echo $? > ipfs-pin-remote-add-exitcode
   ) > /dev/null 2>&1
-  echo "Finished pinning $h on the remote service"
+  echo "Finished pinning $h on the remote service, exitcode=$(cat ipfs-pin-remote-add-exitcode)"
 fi
 
 # Update Homepage URL on GitHub
