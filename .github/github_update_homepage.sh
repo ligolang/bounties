@@ -8,7 +8,7 @@ h="$(result/www/ipfs-add.sh)"
 
 echo "After pinning, the new homepage URL will be: https://$h.ipfs.dweb.link/"
 
-if test -n "$IPFS_REMOTE_API_ENDPOINT" && test -n "$IPFS_REMOTE_TOKEN" && test -n "IPFS_SWARM_CONNECT_TO"; then
+if test -n "${IPFS_REMOTE_API_ENDPOINT:-}" && test -n "${IPFS_REMOTE_TOKEN:-}" && test -n "${IPFS_SWARM_CONNECT_TO:-}"; then
   # Wait for IPFS daemon to be ready
   echo 'Starting IPFS daemon...'
   tail -F /tmp/ipfs-daemon.logs -n +1 & pid=$!
