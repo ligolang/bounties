@@ -43,6 +43,6 @@ jobs:
         run: PATH="/tmp/kubo:$PATH" ./.github/github_update_homepage.sh
         env:
           API_TOKEN_FOR_UPDATE_HOMEPAGE: ${{ secrets.API_TOKEN_FOR_UPDATE_HOMEPAGE }}
-#          IPFS_SWARM_CONNECT_TO: ${{ secrets.IPFS_SWARM_CONNECT_TO }}
-#          IPFS_REMOTE_API_ENDPOINT: ${{ secrets.IPFS_REMOTE_API_ENDPOINT }}
-#          IPFS_REMOTE_TOKEN: ${{ secrets.IPFS_REMOTE_TOKEN }}
+          IPFS_SWARM_CONNECT_TO: ${{ secrets.IPFS_SWARM_CONNECT_TO }}
+          IPFS_REMOTE_API_ENDPOINT: ${{ secrets.IPFS_REMOTE_API_ENDPOINT }}
+          IPFS_REMOTE_TOKEN: ${{ secrets.IPFS_REMOTE_TOKEN }}
