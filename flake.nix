@@ -29,9 +29,9 @@
           done
           
           index_html_links() {
-            name="$(basename "$bounty" .md)"
             printf '%s\n' "<ul>"
             for bounty in bounties/*.md; do
+              name="$(basename "$bounty" .md)"
               printf '<li><a href="%s.html">%s</a></li>\n' "$name" "$name"
             done
             printf '%s\n' "</ul>"
