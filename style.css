@@ -1,0 +1,94 @@
+/* Copied from Suzanne Soy's blog https://composable.fr/style.css */
+
+html {
+	background: #eee;
+	padding: 0 .5em;
+}
+
+body {
+	background: white;
+	border: thick solid #ddd;
+	border-radius: 2em;
+	padding: 0.5em 2em 1.5em;
+	max-width: 40em;
+	margin: 2em auto;
+	font-family: Helvetica,Arial,sans-serif;
+	font-size: 120%;
+	line-height: 1.3em;
+	color: #333;
+}
+
+h1 {
+	color: #222;
+}
+
+code {
+	color: #04c;
+	background: #eee;
+	padding: 0.1em 0.3em;
+}
+
+input, select {
+	padding: 0.3em !important;
+}
+
+pre em {
+	color: red;
+	font-style: normal;
+}
+
+kbd {
+	color: #444;
+	background-color: aliceblue;
+	border: thin solid gray;
+	border-radius: .5ex;
+	padding-left: .5ex;
+	padding-right: .5ex;
+}
+
+pre kbd {
+	color: #04c;
+	border: none;
+	border-radius: 0;
+	padding-left: initial;
+	padding-right: initial;
+}
+
+pre {
+	overflow: auto;	
+	background: #eee;
+	border: thin solid #ccc;
+	padding: .5em;
+	border-radius: .5em;
+}
+
+hr {
+	margin: 1em 25%;
+	height: .35ex;
+	color: #aaa;
+	background-color: #aaa;
+	border: none;
+	border-radius: .175ex;
+}
+
+/* TODO: use a technique like tinytypo's to change the quotes based on the language?
+ * https://github.com/tetue/tinytypo/blob/5f7411746c8c4d634ac8cd14c730b86f4ffd1813/css/typo.css#L397
+ */
+blockquote {
+    border-left: 0.85ex solid #ccc;
+    padding: 0.8ex 1ex;
+    background: #f0f0f0;
+    margin: 1em 2em;
+}
+
+/* An <ul> appearing at the end of a blockquote has too much vertical space following it. */
+ul:last-child {
+	margin-bottom: .25ex
+}
+
+.varblock {
+	display: inline-block;
+	border: thin solid #888;
+	padding: 0 .5em;
+	border-radius: .5em;
+}
