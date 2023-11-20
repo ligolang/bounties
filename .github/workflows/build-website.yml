@@ -34,7 +34,7 @@ jobs:
         run: nix build
       - name: Download IPFS
         run: ./.github/github_install_ipfs.sh
-      - name: Print IPFS hahs
-        run: PATH="/tmp/kubo:$PATH" ./result/www/ipfs-add.sh --pin=false; cat result/ipfs.url
+      - name: Print IPFS hahes
+        run: export PATH="/tmp/kubo:$PATH"; ./result/www/ipfs-add.sh --pin=false; cat result/ipfs.url
       - name: Compare IPFS hashes
-        run: PATH="/tmp/kubo:$PATH" test "ipfs://$(./result/www/ipfs-add.sh --pin=false)" = "$(cat result/ipfs.url)"
+        run: export PATH="/tmp/kubo:$PATH"; test "ipfs://$(./result/www/ipfs-add.sh --pin=false)" = "$(cat result/ipfs.url)"
