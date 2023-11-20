@@ -18,21 +18,27 @@ if test -n "${IPFS_REMOTE_API_ENDPOINT:-}" && test -n "${IPFS_REMOTE_TOKEN:-}" &
   kill "$pid"
   echo 'log tail killed'
 
+  printf %s\\n "$IPFS_SWARM_CONNECT_TO" | while read line; do
+    echo "Connecting to some IPFS node..."
+    (
+      ipfs swarm connect "$IPFS_SWARM_CONNECT_TO" &
+      sleep 10
+    ) > /dev/null 2>&1
+  done
+
   # Pin this hash
   echo "Adding remote pinning service..."
   (
     ipfs pin remote service add my-remote-pin "$IPFS_REMOTE_API_ENDPOINT" "$IPFS_REMOTE_TOKEN"
   ) > /dev/null 2>&1
 
-  echo "Connecting to some IPFS node..."
-  (
-    ipfs swarm connect "$IPFS_SWARM_CONNECT_TO"
-  ) > /dev/null 2>&1
-
   echo "Pinning $h on the remote service..."
   (
-    ipfs pin remote add --service=my-remote-pin --name="site-bounties-$(TZ=UTC git log -1 --format=%cd --date=iso-strict-local HEAD)-$GITHUB_SHA" "$h"
-    echo $? > ipfs-pin-remote-add-exitcode
+    if ipfs pin remote add --service=my-remote-pin --name="site-bounties-$(TZ=UTC git log -1 --format=%cd --date=iso-strict-local HEAD)-$GITHUB_SHA" "$h"; then
+      echo $? > ipfs-pin-remote-add-exitcode
+    else
+      echo $? > ipfs-pin-remote-add-exitcode
+    fi
   ) > /dev/null 2>&1
   echo "Finished pinning $h on the remote service, exitcode=$(cat ipfs-pin-remote-add-exitcode)"
 fi
