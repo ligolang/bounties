@@ -30,7 +30,7 @@ if test -n "${IPFS_REMOTE_API_ENDPOINT:-}" && test -n "${IPFS_REMOTE_TOKEN:-}" &
   printf %s\\n "$IPFS_REMOTE_API_ENDPOINT" | (i=1; while read api_endpoint; do
     echo "Extracting token $i from environment..."
     token="$( (printf %s\\n "$IPFS_REMOTE_TOKEN" | tail -n +"$i" | head -n 1) 2>/dev/null )"
-    (printf %s "$token" | sha256sum | sha256sum | sha256sum) 2>/dev/null # for debugging without leaking the token
+    #(printf %s "$token" | sha256sum | sha256sum | sha256sum) 2>/dev/null # for debugging without leaking the token
     # Pin this hash
     echo "Adding remote pinning service $i..."
     (
