@@ -61,12 +61,12 @@ for i in `seq 2`; do
   | cut -d ' ' -f 3- \
   | sed -e 's~^www/*~~' \
   | while read f; do
-    printf "Warming up Cloudflare cache for %s (attempt %d)...\n" "$f" "$i"
-    wget -O- "https://cloudflare-ipfs.com/ipfs/$h/$f" > /dev/null || true
-    printf "Warming up dweb.link cache for %s (attempt %d)...\n" "$f" "$i"
-    wget -O- "https://$h.ipfs.dweb.link/$f" > /dev/null || true
     printf "Warming up pinata cache for %s (attempt %d)...\n" "$f" "$i"
-    wget -O- "https://gateway.pinata.cloud/ipfs/$h/$f" > /dev/null || true
+    wget --tries=1 --timeout=10 -O- "https://gateway.pinata.cloud/ipfs/$h/$f" > /dev/null || true
+    printf "Warming up Cloudflare cache for %s (attempt %d)...\n" "$f" "$i"
+    wget --tries=1 --timeout=10 -O- "https://cloudflare-ipfs.com/ipfs/$h/$f" > /dev/null || true
+    printf "Warming up dweb.link cache for %s (attempt %d)...\n" "$f" "$i"
+    wget --tries=1 --timeout=10 -O- "https://$h.ipfs.dweb.link/$f" > /dev/null || true
   done
 done
 
