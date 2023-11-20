@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title class="markdown-title-placeholder">Bounty</title>
+    <link type="text/css" rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <p class="ipfs-permalink" id="ipfs-permalink"><a href="#">Permalink: ipfs://… (computing, please wait)</a></p>
+    <h1>LIGO bounty program</h1>
+    <p>The following tasks are open for third-party developers to claim. Please see the description of each task to learn about the process, the completion criteria and the associated payment or reward.</p>
+    <div class="markdown-content-placeholder"></div>
+    <script src="sha256.js"></script>
+    <script src="micro_ipfs.js"></script>
+    <script src="directory_hashes.js"></script>
+    <script>
+      (function() {
+        var hash = ipfs_self_hash.get_link();
+        var filepath = 'placeholder-filepath';
+        if (filepath == 'index.html') {
+          filepath = '';
+        }
+        document.getElementById('ipfs-permalink').innerHTML = '<a href="ipfs://' + hash + '/placeholder-filepath">Permalink: ipfs://'+hash.substring(0,4)+'…'+hash.substring(53)+'/'+filepath+'</a>';
+      })();
+    </script>
+  </body>
+</html>

@@ -17,18 +17,18 @@
 
           template() {
             # usage: template TITLE CONTENTS_FILE PATH_TO_OUTPUT_WWW_ROOT RELATIVE_PATH_TO_OUTPUT_HTML
-            cat template.html \
-              | sed -e "/markdown-title-placeholder/a <title>$1</title>" \
+            cat "$1" \
+              | sed -e "/markdown-title-placeholder/a <title>$2</title>" \
                     -e '/markdown-title-placeholder/d' \
-              | sed -e "/markdown-content-placeholder/r $2" \
+              | sed -e "/markdown-content-placeholder/r $3" \
                     -e '/markdown-content-placeholder/d' \
-              | sed -e "s~placeholder-filepath~$4~g" \
-              > "$3/$4"
+              | sed -e "s~placeholder-filepath~$5~g" \
+              > "$4/$5"
           }
 
           for bounty in bounties/*.md; do
             name="$(basename "$bounty" .md)"
-            template "LIGO Bounty $name" <(pandoc -f markdown -t html "$bounty") "$out/www/" "$name.html"
+            template "template.html" "LIGO Bounty $name" <(pandoc -f markdown -t html "$bounty") "$out/www/" "$name.html"
           done
           
           index_html_links() {
@@ -39,7 +39,7 @@
             done
             printf '%s\n' "</ul>"
           }
-          template "LIGO Bounties" <(index_html_links) "$out/www/" "index.html"
+          template "template-index.html" "LIGO Bounties" <(index_html_links) "$out/www/" "index.html"
 
           cp style.css sha256.js micro_ipfs.js "$out/www/"
           cp www-ipfsignore "$out/www/.ipfsignore"
