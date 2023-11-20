@@ -35,6 +35,6 @@ jobs:
       - name: Download IPFS
         run: ./.github/github_install_ipfs.sh
       - name: Print IPFS hahs
-        run: ./result/www/ipfs-add.sh --pin=false; cat result/ipfs.url
+        run: PATH="/tmp/kubo:$PATH" ./result/www/ipfs-add.sh --pin=false; cat result/ipfs.url
       - name: Compare IPFS hashes
         run: PATH="/tmp/kubo:$PATH" test "ipfs://$(./result/www/ipfs-add.sh --pin=false)" = "$(cat result/ipfs.url)"
