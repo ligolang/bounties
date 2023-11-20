@@ -8,6 +8,8 @@ h="$(result/www/ipfs-add.sh)"
 
 printf "Pinning ipfs://%s/\n" "$h"
 
+echo 0 > ipfs-pin-global-exitcode
+
 if test -n "${IPFS_REMOTE_API_ENDPOINT:-}" && test -n "${IPFS_REMOTE_TOKEN:-}" && test -n "${IPFS_SWARM_CONNECT_TO:-}"; then
   # Wait for IPFS daemon to be ready
   echo 'Starting IPFS daemon...'
@@ -46,6 +48,9 @@ if test -n "${IPFS_REMOTE_API_ENDPOINT:-}" && test -n "${IPFS_REMOTE_TOKEN:-}" &
       fi
     ) > /dev/null 2>&1
     printf "Finished pinning %s on the remote service %s, exitcode=%s\n" "$h" "$i" "$(cat ipfs-pin-remote-add-exitcode)"
+    if test "$(cat ipfs-pin-remote-add-exitcode)" != 0; then
+      echo 1 > ipfs-pin-global-exitcode
+    fi
     i=$((i+1))
   done)
 fi
@@ -61,6 +66,9 @@ for i in `seq 2`; do
     printf "Warming up dweb.link cache for %s (attempt %d)...\n" "$f" "$i"
     wget -O- "https://$h.ipfs.dweb.link/$f" > /dev/null || true
     printf "Warming up pinata cache for %s (attempt %d)...\n" "$f" "$i"
-    wget -O- "https://https://gateway.pinata.cloud/ipfs/$h/$f" > /dev/null || true
+    wget -O- "https://gateway.pinata.cloud/ipfs/$h/$f" > /dev/null || true
   done
 done
+
+# Fail job if one of the pinning services didn't work
+exit "$(cat ipfs-pin-global-exitcode)"
