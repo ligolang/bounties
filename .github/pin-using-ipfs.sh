@@ -6,7 +6,7 @@ echo "Hashing repository contents with IPFS..."
 
 h="$(result/www/ipfs-add.sh)"
 
-echo "After pinning, the new homepage URL will be: https://$h.ipfs.dweb.link/"
+printf "Pinning ipfs://%s/\n" "$h"
 
 if test -n "${IPFS_REMOTE_API_ENDPOINT:-}" && test -n "${IPFS_REMOTE_TOKEN:-}" && test -n "${IPFS_SWARM_CONNECT_TO:-}"; then
   # Wait for IPFS daemon to be ready
@@ -19,7 +19,7 @@ if test -n "${IPFS_REMOTE_API_ENDPOINT:-}" && test -n "${IPFS_REMOTE_TOKEN:-}" &
   echo 'log tail killed'
 
   printf %s\\n "$IPFS_SWARM_CONNECT_TO" | (i=1; while read multiaddr; do
-    echo "Connecting to IPFS node $i..."
+    printf "Connecting to IPFS node %s...\n" "$i"
     (
       ipfs swarm connect "$multiaddr" &
     ) > /dev/null 2>&1
@@ -28,16 +28,16 @@ if test -n "${IPFS_REMOTE_API_ENDPOINT:-}" && test -n "${IPFS_REMOTE_TOKEN:-}" &
   sleep 10
 
   printf %s\\n "$IPFS_REMOTE_API_ENDPOINT" | (i=1; while read api_endpoint; do
-    echo "Extracting token $i from environment..."
+    printf "Extracting token %s from environment...\n" "$i"
     token="$( (printf %s\\n "$IPFS_REMOTE_TOKEN" | tail -n +"$i" | head -n 1) 2>/dev/null )"
     #(printf %s "$token" | sha256sum | sha256sum | sha256sum) 2>/dev/null # for debugging without leaking the token
     # Pin this hash
-    echo "Adding remote pinning service $i..."
+    printf "Adding remote pinning service %s...\n" "$i"
     (
       ipfs pin remote service add my-remote-pin-"$i" "$api_endpoint" "$token"
     ) > /dev/null 2>&1
 
-    echo "Pinning $h on the remote service $i..."
+    printf "Pinning %s on the remote service %s...\n" "$h" "$i"
     (
       if ipfs pin remote add --service=my-remote-pin-"$i" --name="site-bounties-$(TZ=UTC git log -1 --format=%cd --date=iso-strict-local HEAD)-$GITHUB_SHA" "$h"; then
         echo $? > ipfs-pin-remote-add-exitcode
@@ -45,7 +45,7 @@ if test -n "${IPFS_REMOTE_API_ENDPOINT:-}" && test -n "${IPFS_REMOTE_TOKEN:-}" &
         echo $? > ipfs-pin-remote-add-exitcode
       fi
     ) > /dev/null 2>&1
-    echo "Finished pinning $h on the remote service $i, exitcode=$(cat ipfs-pin-remote-add-exitcode)"
+    printf "Finished pinning %s on the remote service %s, exitcode=%s\n" "$h" "$i" "$(cat ipfs-pin-remote-add-exitcode)"
     i=$((i+1))
   done)
 fi
@@ -56,11 +56,11 @@ for i in `seq 2`; do
   | cut -d ' ' -f 3- \
   | sed -e 's~^www/*~~' \
   | while read f; do
-    printf "Warming up Cloudflare cache for $f (attempt $i)..."
+    printf "Warming up Cloudflare cache for %s (attempt %d)...\n" "$f" "$i"
     wget -O- "https://cloudflare-ipfs.com/ipfs/$h/$f" > /dev/null || true
-    printf "Warming up dweb.link cache for $f (attempt $i)..."
+    printf "Warming up dweb.link cache for %s (attempt %d)...\n" "$f" "$i"
     wget -O- "https://$h.ipfs.dweb.link/$f" > /dev/null || true
-    printf "Warming up pinata cache for $f (attempt $i)..."
+    printf "Warming up pinata cache for %s (attempt %d)...\n" "$f" "$i"
     wget -O- "https://https://gateway.pinata.cloud/ipfs/$h/$f" > /dev/null || true
   done
 done

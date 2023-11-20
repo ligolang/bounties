@@ -6,6 +6,8 @@ echo "Hashing repository contents with IPFS..."
 
 h="$(result/www/ipfs-add.sh)"
 
+printf "The new homepage URL will be: https://%s.ipfs.dweb.link/\n" "$h"
+
 # Update Homepage URL on GitHub
 curl -L \
   -X PATCH \
