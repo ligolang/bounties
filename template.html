@@ -6,7 +6,7 @@
     <link type="text/css" rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <p id="ipfs-link"></p>
+    <p class="ipfs-permalink" id="ipfs-permalink"><a href="#">Permalink: ipfs://… (computing, please wait)</a></p>
     <div class="markdown-content-placeholder"></div>
     <script src="sha256.js"></script>
     <script src="micro_ipfs.js"></script>
@@ -14,7 +14,11 @@
     <script>
       (function() {
         var hash = ipfs_self_hash.get_link();
-        document.getElementById('ipfs-link').innerHTML = '<a href="ipfs://' + hash + '/placeholder-filepath">Permalink: ipfs://'+hash.substring(0,4)+'…'+hash.substring(53)+'/placeholder-filepath</a>';
+        var filepath = 'placeholder-filepath';
+        if (filepath == 'index.html') {
+          filepath = '';
+        }
+        document.getElementById('ipfs-permalink').innerHTML = '<a href="ipfs://' + hash + '/placeholder-filepath">Permalink: ipfs://'+hash.substring(0,4)+'…'+hash.substring(53)+'/'+filepath+'</a>';
       })();
     </script>
   </body>

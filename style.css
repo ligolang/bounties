@@ -92,3 +92,17 @@ ul:last-child {
 	padding: 0 .5em;
 	border-radius: .5em;
 }
+
+.ipfs-permalink {
+  color: #555;
+  font-style: italic;
+  font-size: 80%;
+  text-align: right;
+}
+.ipfs-permalink a {
+  color: #555;
+  font-style: italic;
+}
+.ipfs-permalink a:hover, .ipfs-permalink a:active {
+  color: black;
+}
