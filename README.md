@@ -3,7 +3,7 @@
 ## Build && serve
 
     git add .
-    nix build && result/www/ipfs-add.sh
+    nix build && result/www/ipfs-add.sh --pin=true
 
 Congratulations, the website is already deployed and served by your local IPFS node, and therefore accessible worldwide. To view it:
 

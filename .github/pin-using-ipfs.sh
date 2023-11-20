@@ -4,7 +4,7 @@ set -euET -o pipefail
 
 echo "Hashing repository contents with IPFS..."
 
-h="$(result/www/ipfs-add.sh)"
+h="$(result/www/ipfs-add.sh --pin=true)"
 
 printf "Pinning ipfs://%s/\n" "$h"
 

@@ -1,6 +1,6 @@
 {
   description = "Bounty website for LIGO";
-  inputs.archivable.url = github:SuzanneSoy/archivable/9d01ce1a663bb3cde8e86ea0819dd24721a17bda;
+  inputs.archivable.url = github:SuzanneSoy/archivable/ac1b3c0c4c40352531a1b2df5201bed33606dc0d; # branch: main @ Mon Nov 20 18:28:22 2023
   outputs = { self, nixpkgs, archivable }: {
     defaultPackage.x86_64-linux = self.packages.x86_64-linux.website;
     packages.x86_64-linux.website =
