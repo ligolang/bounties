@@ -48,7 +48,7 @@ jobs:
           IPFS_REMOTE_API_ENDPOINT: ${{ secrets.IPFS_REMOTE_API_ENDPOINT }}
           IPFS_REMOTE_TOKEN: ${{ secrets.IPFS_REMOTE_TOKEN }}
       - name: Update homepage URL
-        run: ./.github/github_update_homepage.sh
+        run: PATH="/tmp/kubo:$PATH" ./.github/github_update_homepage.sh
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
