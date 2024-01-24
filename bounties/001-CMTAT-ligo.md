@@ -1,7 +1,7 @@
 # LIGO - CMTAT-Ligo - #1
 ## Current Status: Open for application
 * Open for application (18/12/2023)
-* Assigned 
+* Assigned : (22/01/2024)
 * In Review
 * Closed
 
