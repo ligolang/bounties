@@ -2,8 +2,8 @@
 ## Current Status: Open for application
 * Open for application (18/12/2023)
 * Assigned : (22/01/2024)
-* In Review
-* Closed
+* In Review : (20/03/2024)
+* Closed : (05/04/2024)
 
 ## Bounty Details
 * Total Bounty Amount (without bonus): 2500 xtz
